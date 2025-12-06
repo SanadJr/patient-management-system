@@ -37,7 +37,7 @@ public:
         size = 0;
     }
 
-    // Cheack if the queue is empty or not
+    // Cheack if the queue is empty or not.
     bool isEmpty()
     {
         return (head == NULL && tail == NULL);
@@ -80,7 +80,7 @@ public:
         }
     }
 
-    
+
 };
 
 #endif
