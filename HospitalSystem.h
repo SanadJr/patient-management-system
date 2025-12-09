@@ -1,3 +1,6 @@
+// بسم الله الرحمن الرحيم
+// "وَأَنْ لَيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ"
+// Free Palestine
 #ifndef HOSPITALSYSTEM_H
 #define HOSPITALSYSTEM_H
 

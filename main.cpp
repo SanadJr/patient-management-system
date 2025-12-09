@@ -26,7 +26,7 @@ void debug() { cout << "[DEBUG]" << nl; }
 
 signed main()
 {
-     HospitalSystem myHospital; // Now the computer knows what this is!
+    HospitalSystem myHospital; // Now the computer knows what this is! 
     myHospital.run();
   
 

@@ -1,8 +1,12 @@
+// بسم الله الرحمن الرحيم
+// "وَأَنْ لَيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ"
+// Free Palestine
 #ifndef DOCTORLIST_H
 #define DOCTORLIST_H
 
 #include <bits/stdc++.h>
 #include "PatientQueue.h"
+#include "Doctor.h"
 using namespace std;
 
 class ListNode
