@@ -18,6 +18,7 @@ class HospitalSystem
 {
 private:
     map<CaseType, DoctorList *> doctorsByMajor;
+    PatientQueue waiting;  // this if there is no doctor of any major we will add patient herer
     map<int, Person> validateId; // this map to validate id to check if this id is found or not
 
 public:

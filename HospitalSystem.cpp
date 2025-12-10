@@ -35,7 +35,7 @@ static string readName()
 {
     string s;
     std::getline(cin, s);
-    if (s.size() == 0) 
+    if (s.size() == 0)
         std::getline(cin, s);
     return s;
 }
@@ -73,6 +73,70 @@ static string readLineTrimmed()
 // ================= PATIENT MANAGEMENT =================
 void HospitalSystem::registerPatient()
 {
+    cout << "\n";
+    cout << "+==================================================+\n";
+    cout << "|                REGISTER NEW PATIENT              |\n";
+    cout << "+==================================================+\n";
+    cout << "Enter Patient ID (integer): ";
+    int id = safe_input_int(1, INT_MAX);
+    if (validateId.count(id))
+    {
+        cout << "This Patient ID already exists! Registration cancelled.\n";
+        return;
+    }
+
+    cout << "Enter Patient Name: ";
+    string name = readLineTrimmed();
+
+    cout << "Enter Age: ";
+    int age = safe_input_int(0, 150);
+
+    CaseType ct = readCaseType();
+
+    Patient p(id, name, age, ct);
+
+    DoctorList *list = doctorsByMajor[ct];
+
+    if (list == nullptr || list->isEmpty())
+    {
+        cout << "No doctors availalbe  in the department!" << nl;
+        cout << "Patient will be pushed into the WAITING LIST.\n";
+        waiting.enqueue(p);
+        cout << name << " added to WATTING LIST." << nl;
+        return;
+    }
+
+    cout << "\n+==================================================+\n";
+    cout << "|         AVAILABLE DOCTORS IN THIS DEPARTMENT     |\n";
+    cout << "+==================================================+\n";
+    ListNode *curr = list->getHead();
+    while (curr != nullptr)
+    {
+        cout << "Doctor ID : " << curr->doctor.getId() << "\n";
+        cout << "Name      : " << curr->doctor.getName() << "\n";
+        cout << "Queue     : " << curr->Patients.getQueueCount() << " waiting\n";
+        cout << "------------------------------------------\n";
+
+        curr = curr->next;
+    }
+    cout << "Enter Doctor ID to assign the patient: ";
+    int choId = safe_input_int(1, INT_MAX);
+    ListNode *doc = list->SearchById(choId);
+
+    if (doc == nullptr)
+    {
+        cout << "Invalid Doctor ID! Patient moved to WAITING LIST.\n";
+        waiting.enqueue(p);
+        return;
+    }
+
+    doc->Patients.enqueue(p);
+    validateId[id] = p;
+
+    cout << "\nPatient " << p.getName()
+         << " assigned to Dr. " << doc->doctor.getName() << "'s queue.\n";
+
+    cout << "+==================================================+\n";
 }
 void HospitalSystem::deletePatient() {}
 void HospitalSystem::searchPatientByID() {}
