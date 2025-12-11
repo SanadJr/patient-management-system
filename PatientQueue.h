@@ -43,6 +43,11 @@ public:
         return patientCount;
     }
 
+    QueueNode *getHead()
+    {
+        return head;
+    }
+
     // Enqueue to add patient
     void enqueue(Patient patient)
     {

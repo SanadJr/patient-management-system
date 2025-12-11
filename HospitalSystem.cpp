@@ -177,46 +177,82 @@ void HospitalSystem::showDoctorQueue() {} // sanad
 // ================= General =================
 void HospitalSystem::displayPatients()
 {
-    cout << "\n";
-    cout << "+==================================================+\n";
-    cout << "|                 ALL PATIENTS LIST                |\n";
-    cout << "+==================================================+\n";
+
+    cout << "\n+===============================================================================================================+\n";
+    cout << "|                                              PATIENTS TABLE                                                  |\n";
+    cout << "+===============================================================================================================+\n";
+
+    // Table Header
+    cout << "| "
+         << left << setw(5) << "ID"
+         << "| " << setw(20) << "Name"
+         << "| " << setw(5) << "Age"
+         << "| " << setw(12) << "Major"
+         << "| " << setw(20) << "Assigned Doctor"
+         << "| " << setw(12) << "Doctor ID"
+         << "| " << setw(10) << "Status"
+         << "|\n";
+
+    cout << "+---------------------------------------------------------------------------------------------------------------+\n";
 
     bool found = false;
-    cout << "================== ASSIGNED PATIENTS ==================\n";
+
     for (auto &[maj, doclist] : doctorsByMajor)
     {
         ListNode *curr = doclist->getHead();
+
         while (curr != nullptr)
         {
-            if (!curr->Patients.isEmpty())
-            {
-                found = 1;
-                cout << "\n--------------------Doctor Info--------------------\n";
-                cout << "Major: " << caseTypeTostring(curr->doctor.getCaseType()) << nl;
-                cout << "Doctor: " << curr->doctor.getName() << nl;
-                cout << "ID: " << curr->doctor.getId() << nl;
-                cout << "\n---------------------------------------------------\n";
+            QueueNode *p = curr->Patients.getHead();
 
-                curr->Patients.display();
+            while (p != nullptr)
+            {
+                found = true;
+
+                cout << "| "
+                     << left << setw(5) << p->patient.getId()
+                     << "| " << setw(20) << p->patient.getName()
+                     << "| " << setw(5) << p->patient.getAge()
+                     << "| " << setw(12) << caseTypeTostring(p->patient.getCaseType())
+                     << "| " << setw(20) << curr->doctor.getName()
+                     << "| " << setw(12) << curr->doctor.getId()
+                     << "| " << setw(10) << "Assigned"
+                     << "|\n";
+
+                p = p->next;
             }
+
             curr = curr->next;
         }
     }
 
     if (!found)
-        cout << "No assigned Patients." << nl;
+    {
+        cout << "|                                        No assigned patients found.                                           |\n";
+    }
 
-    cout << "\n====================== WAITING LIST ======================\n";
-    if (waiting.isEmpty())
+    if (!waiting.isEmpty())
     {
-        cout << "No patients in waiting list." << nl;
+        QueueNode *p = waiting.getHead();
+
+        while (p != nullptr)
+        {
+            cout << "| "
+                 << left << setw(5) << p->patient.getId()
+                 << "| " << setw(20) << p->patient.getName()
+                 << "| " << setw(5) << p->patient.getAge()
+                 << "| " << setw(12) << caseTypeTostring(p->patient.getCaseType())
+                 << "| " << setw(20) << "---"
+                 << "| " << setw(12) << "---"
+                 << "| " << setw(10) << "Waiting"
+                 << "|\n";
+
+            p = p->next;
+        }
     }
-    else
-    {
-        waiting.display();
-    }
-    cout << "\n+==================================================+\n";
+
+    cout << "+===============================================================================================================+\n";
+    // we can also use display function which in Queue and LinkedList but this way is more formal
 }
 
 void HospitalSystem::displayDoctors()
@@ -268,7 +304,7 @@ void HospitalSystem::displayDoctors()
 
     cout << "+====================================================================================================+\n";
 
-    // you can also use display function which on list of doctors but this is more formal
+    // we can also use display function which on list of doctors but this is more formal
 }
 
 // ================= MAIN MENU & PATIENT MENU & DOCTOR MENU & closing =================
