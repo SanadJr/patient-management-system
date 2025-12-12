@@ -188,6 +188,15 @@ void HospitalSystem::searchPatientByID()
 
     // Get person from validateId map
     Person person = validateId[id];
+    // Verify this ID belongs to a patient (search in patient queues)
+    // Since we have the CaseType, we can check if it's a doctor in that department.
+    // If it is a doctor, we shouldn't display it as a patient.
+    if (doctorsByMajor[person.getCaseType()]->SearchById(id) != nullptr)
+    {
+        cout << "This ID belongs to a doctor, not a patient!\n";
+        cout << "+==================================================+\n";
+        return;
+    }
 
     // Display patient information
     cout << "\n+==================================================+\n";
