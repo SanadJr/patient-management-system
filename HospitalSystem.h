@@ -30,7 +30,7 @@ public:
 
     // --- Patient Management ---
     void registerPatient();   // done
-    void deletePatient();     // sanad
+    void deletePatient();     // done
     void searchPatientByID(); // done
 
     // --- Doctor Management ---
